@@ -30,9 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        mainViewModel.restaurant.observe(this, { restaurant ->
+        mainViewModel.restaurant.observe(this) { restaurant ->
             setRestaurantData(restaurant)
-        })
+        }
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvReview.layoutManager = layoutManager
@@ -40,15 +40,15 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvReview.addItemDecoration(itemDecoration)
 
-        mainViewModel.listReview.observe(this, { consumerReviews ->
+        mainViewModel.listReview.observe(this) { consumerReviews ->
             setReviewData(consumerReviews)
-        })
+        }
 
-        mainViewModel.isLoading.observe(this, {
+        mainViewModel.isLoading.observe(this) {
             showLoading(it)
-        })
+        }
 
-        mainViewModel.snackbarText.observe(this, {
+        mainViewModel.snackbarText.observe(this) {
             it.getContentIfNotHandled()?.let { snackBarText ->
                 Snackbar.make(
                     window.decorView.rootView,
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
-        })
+        }
 
         binding.btnSend.setOnClickListener { view ->
             mainViewModel.postReview(binding.edReview.text.toString())
